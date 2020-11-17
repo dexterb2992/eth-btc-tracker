@@ -22,22 +22,32 @@ function numberFormat(number, decimals, dec_point, thousands_sep) {
 chrome.browserAction.onClicked.addListener(function(tab) {
 	$.when(
 		$.ajax({
-			url: 'https://coins.ph/api/v1/quote',
+			url: 'https://quote.coins.ph/v1/markets/BTC-PHP',
 			type: 'get',
-			dataType: 'json'
+			dataType: 'json',
 		}),
+
 		$.ajax({
-			url: 'https://cex.io/api/last_price/ETH/USD',
+			url: 'https://quote.coins.ph/v1/markets/ETH-PHP',
 			type: 'get',
-			dataType: 'json'
-		})
-	).promise().done(function (coinsPH, cexIO) {
-		console.log(cexIO);
-		alert("BUY PRICE: \n 1 BTC = ₱"+
-			numberFormat(coinsPH[0].quote.ask, 2)+
-			"\nSELL PRICE:\n 1 BTC = ₱"+numberFormat(coinsPH[0].quote.bid, 2)+
-			"\nCEX.IO\n"+
-			"1 ETH = $"+numberFormat(cexIO[0].lprice, 2)
+			dataType: 'json',
+		}),
+
+		$.ajax({
+			url: 'https://quote.coins.ph/v1/markets/XRP-PHP',
+			type: 'get',
+			dataType: 'json',
+		}),
+	).promise().done(function (btc, eth, xrp) {
+		console.log(btc);
+		alert("BUY PRICE:\n" + 
+			"\n1 BTC = ₱" + numberFormat(btc[0].market.ask, 2) +
+			"\n1 ETH = ₱" + numberFormat(eth[0].market.ask, 2) +
+			"\n1 XRP = ₱" + numberFormat(xrp[0].market.ask, 2) +
+			"\n\nSELL PRICE:\n" + 
+			"\n1 BTC = ₱" + numberFormat(btc[0].market.bid, 2) +
+			"\n1 ETH = ₱" + numberFormat(eth[0].market.bid, 2) +
+			"\n1 XRP = ₱" + numberFormat(xrp[0].market.bid, 2)	
 		);
 		
 	});
