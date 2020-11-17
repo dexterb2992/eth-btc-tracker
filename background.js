@@ -38,14 +38,22 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 			type: 'get',
 			dataType: 'json',
 		}),
-	).promise().done(function (btc, eth, xrp) {
+
+		$.ajax({
+			url: 'https://quote.coins.ph/v1/markets/BCH-PHP',
+			type: 'get',
+			dataType: 'json',
+		}),
+	).promise().done(function (btc, eth, xrp, bch) {
 		console.log(btc);
-		alert("BUY PRICE:\n" + 
+		alert("BUY PRICE:" + 
 			"\n1 BTC = ₱" + numberFormat(btc[0].market.ask, 2) +
+			"\n1 BHC = ₱" + numberFormat(bch[0].market.ask, 2) +
 			"\n1 ETH = ₱" + numberFormat(eth[0].market.ask, 2) +
 			"\n1 XRP = ₱" + numberFormat(xrp[0].market.ask, 2) +
-			"\n\nSELL PRICE:\n" + 
+			"\n\nSELL PRICE:" + 
 			"\n1 BTC = ₱" + numberFormat(btc[0].market.bid, 2) +
+			"\n1 BHC = ₱" + numberFormat(bch[0].market.bid, 2) +
 			"\n1 ETH = ₱" + numberFormat(eth[0].market.bid, 2) +
 			"\n1 XRP = ₱" + numberFormat(xrp[0].market.bid, 2)	
 		);
