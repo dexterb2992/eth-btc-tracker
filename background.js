@@ -45,7 +45,6 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 			dataType: 'json',
 		}),
 	).promise().done(function (btc, eth, xrp, bch) {
-		console.log(btc);
 		alert("BUY PRICE:" + 
 			"\n1 BTC = ₱" + numberFormat(btc[0].market.ask, 2) +
 			"\n1 BHC = ₱" + numberFormat(bch[0].market.ask, 2) +
